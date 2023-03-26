@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://draek4ot4gf4b"]
+
+[ext_resource type="Script" path="res://pieces/model/pawn.gd" id="1_fmor8"]
+[ext_resource type="Texture2D" uid="uid://ctdspmkoq3xq7" path="res://assets/Rook.png" id="2_asxw0"]
+
+[node name="Piece" type="Node2D"]
+position = Vector2(32, 32)
+script = ExtResource("1_fmor8")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_asxw0")

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ltishe0hovy7"]
+
+[ext_resource type="Script" path="res://pieces/model/pawn.gd" id="1_8t0tr"]
+[ext_resource type="Texture2D" uid="uid://k62qbilwt7sh" path="res://assets/Knight.png" id="2_n8iy2"]
+
+[node name="Piece" type="Node2D"]
+position = Vector2(32, 32)
+script = ExtResource("1_8t0tr")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_n8iy2")
