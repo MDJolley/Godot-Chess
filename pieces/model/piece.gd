@@ -15,7 +15,7 @@ enum Type {PAWN, ROOK, KNIGHT, BISHOP, KING, QUEEN}
 @onready var sprite = $Sprite
 
 func applyColor():
-	print("Applying Color")
+	pass
 
 func _ready():
 	pass
