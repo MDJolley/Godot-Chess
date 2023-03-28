@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://d3evecbfh0uq6"]
 
-[ext_resource type="Script" path="res://pieces/model/pawn.gd" id="1_518v1"]
+[ext_resource type="Script" path="res://pieces/model/king.gd" id="1_d5mgb"]
 [ext_resource type="Texture2D" uid="uid://bgx60ruqq0gmd" path="res://assets/King.png" id="2_sx51a"]
 
 [node name="Piece" type="Node2D"]
 position = Vector2(32, 32)
-script = ExtResource("1_518v1")
+script = ExtResource("1_d5mgb")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_sx51a")

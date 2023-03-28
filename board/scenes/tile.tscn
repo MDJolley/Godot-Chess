@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2641pwrv21fp"]
+[gd_scene load_steps=3 format=3 uid="uid://c2641pwrv21fp"]
 
 [ext_resource type="Script" path="res://board/scripts/tile.gd" id="1_uq16t"]
+[ext_resource type="Texture2D" uid="uid://ceh35linedc2m" path="res://assets/Highlight.png" id="2_a0s7o"]
 
 [node name="Tile" type="Panel"]
 custom_minimum_size = Vector2(64, 64)
@@ -24,4 +25,10 @@ layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
 
+[node name="Highlight" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_a0s7o")
+offset = Vector2(32, 32)
+
 [connection signal="pieceUpdated" from="." to="." method="_on_piece_updated"]
+[connection signal="gui_input" from="Background" to="." method="_on_background_gui_input"]

@@ -11,7 +11,6 @@ func _ready():
 	Global.board = self
 	drawBoard()
 	setupBoard()
-	print(Global.gameState)
 
 func drawBoard():
 	for rank in 8:
@@ -23,6 +22,7 @@ func drawBoard():
 			
 			self.add_child(tile)
 			boardState[tileLocation] = tile
+	emit_signal("boardStateChanged", boardState)
 
 #Initiate new pieces and place them in their starting locations
 func setupBoard():
@@ -55,6 +55,12 @@ func setupBoard():
 	setPiece(Global.initiatePiece(Piece.Type.QUEEN, Global.Player.DARK), Vector2(3, 0))
 	setPiece(Global.initiatePiece(Piece.Type.QUEEN, Global.Player.LIGHT), Vector2(3, 7))
 
+func highlightTiles(tiles):
+	for tile in boardState:
+		boardState[tile].removeHighlight()
+	if tiles:
+		for tile in tiles:
+			boardState[tile].highlight()
 
 #Used only for setting up board.  Once piece already is placed, use movePiece.
 func setPiece(piece, loc):

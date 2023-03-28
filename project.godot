@@ -18,3 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://managers/global.gd"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

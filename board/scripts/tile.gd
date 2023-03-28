@@ -1,7 +1,11 @@
 extends Panel
 class_name Tile
 
+signal pieceUpdated
+signal tileSelected
+
 @onready var background = $Background
+@onready var highlightSprite = $Highlight
 
 @export var darkColor : Color:
 	set(color):
@@ -16,8 +20,6 @@ class_name Tile
 @export var isDark : bool:
 	set(dark): isDark = dark
 	get: return isDark
-
-signal pieceUpdated
 
 var piece : Piece = null:
 	set(p): 
@@ -35,6 +37,7 @@ var board : Board:
 
 func _ready():
 	updateColor()
+	highlightSprite.set_modulate(Color.BLUE)
 
 func updateColor() -> void:
 	var sum : int = location.x + location.y
@@ -48,6 +51,39 @@ func _on_piece_updated(newPiece):
 	if not existingPiece: add_child(newPiece)
 	else: 
 		existingPiece.queue_free()
-		print("Adding newPiece")
 		add_child(newPiece)
-#	print(existingPiece)
+
+
+func _on_background_gui_input(event):
+	if (event is InputEventMouseButton 
+	and event.is_pressed() 
+	and event.button_index == MOUSE_BUTTON_LEFT):
+		#Check game sequence to know how click should be handled. 
+		if Global.sequence == Global.Sequence.IDLE:
+			_handle_idle_click()
+		if Global.sequence == Global.Sequence.MOVING:
+			_handle_moving_click()
+
+func _handle_moving_click():
+	pass
+
+func _handle_idle_click():
+	#Clicked empty tile
+	if not piece or piece.player != Global.currentPlayer: 
+		Global.validMoves = Array()
+		board.highlightTiles(null)
+	#Clicked piece player doesn't own
+#	elif piece.player != Global.currentPlayer:
+#		board.highlightTiles(null)
+	#Clicked tile that current player could move
+	else:
+		var moves = piece.getValidMoves()
+		Global.validMoves = moves
+		board.highlightTiles(moves)
+
+func highlight():
+	highlightSprite.visible = true
+
+func removeHighlight():
+	highlightSprite.visible = false
+
