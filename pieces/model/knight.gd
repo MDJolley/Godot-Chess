@@ -12,12 +12,13 @@ func _init():
 	pass
 
 func getValidMoves() -> Array:
+	var tile = get_parent()
 	var validMoves : Array
 	for move in legalMoves:
-		var endTile : Vector2 = move + location
-		if Global.gameState.has(endTile):
-			if Global.gameState[endTile].piece:
-				if Global.gameState[endTile].piece.owner != self.owner:
+		var endTile : Vector2 = move + tile.location
+		if tile.board.boardState.has(endTile):
+			if tile.board.boardState[endTile].piece:
+				if tile.board.boardState[endTile].piece.player != self.player:
 					validMoves.append(endTile)
 			else: validMoves.append(endTile)
 	return validMoves

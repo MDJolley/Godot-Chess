@@ -21,11 +21,6 @@ signal tileSelected
 	set(dark): isDark = dark
 	get: return isDark
 
-var piece : Piece = null:
-	set(p): 
-		piece = p
-		emit_signal("pieceUpdated", p)
-	get: return piece
 var location : Vector2:
 	set(loc):
 		location = loc
@@ -34,6 +29,13 @@ var location : Vector2:
 var board : Board:
 	set(b): board = b
 	get: return board
+var piece : Piece:
+	set(p):
+		if piece:
+			self.remove_child(piece)
+		self.add_child(p)
+	get:
+		return get_node_or_null("Piece")
 
 func _ready():
 	updateColor()
@@ -44,40 +46,29 @@ func updateColor() -> void:
 	isDark = true if (sum % 2 != 0) else false
 	background.color = darkColor if isDark else lightColor
 
-
-
-func _on_piece_updated(newPiece):
-	var existingPiece = get_node_or_null("Piece")
-	if not existingPiece: add_child(newPiece)
-	else: 
-		existingPiece.queue_free()
-		add_child(newPiece)
-
-
 func _on_background_gui_input(event):
 	if (event is InputEventMouseButton 
 	and event.is_pressed() 
 	and event.button_index == MOUSE_BUTTON_LEFT):
-		#Check game sequence to know how click should be handled. 
-		if Global.sequence == Global.Sequence.IDLE:
-			_handle_idle_click()
-		if Global.sequence == Global.Sequence.MOVING:
-			_handle_moving_click()
+		if Global.validMoves.has(self.location):
+			_handle_moving_click(self)
+		else: _handle_idle_click()
 
-func _handle_moving_click():
-	pass
+func _handle_moving_click(originalTile):
+	board.movePiece(self)
+
 
 func _handle_idle_click():
-	#Clicked empty tile
+	
+	#Clicked empty tile or player doesn't own piece
 	if not piece or piece.player != Global.currentPlayer: 
 		Global.validMoves = Array()
 		board.highlightTiles(null)
-	#Clicked piece player doesn't own
-#	elif piece.player != Global.currentPlayer:
-#		board.highlightTiles(null)
 	#Clicked tile that current player could move
 	else:
+		print(self.piece)
 		var moves = piece.getValidMoves()
+		board.selectedTile = self
 		Global.validMoves = moves
 		board.highlightTiles(moves)
 

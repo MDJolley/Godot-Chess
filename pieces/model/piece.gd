@@ -12,8 +12,6 @@ enum Type {PAWN, ROOK, KNIGHT, BISHOP, KING, QUEEN}
 	set(t): type = t
 	get: return type
 
-@onready var tile : Tile = self.get_parent()
-@onready var location : Vector2 = tile.location
 @onready var sprite = $Sprite
 
 

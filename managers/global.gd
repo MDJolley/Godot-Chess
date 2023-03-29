@@ -11,13 +11,11 @@ enum Player {DARK, LIGHT}
 enum Sequence {IDLE, MOVING}
 var darkColor : Color = Color.DARK_SLATE_BLUE
 var lightColor : Color = Color.LIGHT_SKY_BLUE
-var currentPlayer = Player.LIGHT
-var sequence = Sequence.IDLE
-var gameState = {}
+var currentPlayer : Player = Player.LIGHT
+var sequence : Sequence = Sequence.IDLE
 var board : Board:
 	set(b): 
 		board = b
-		board.boardStateChanged.connect(updateGameState.bind())
 var validMoves : Array
 
 
@@ -42,8 +40,13 @@ func initiatePiece(type, player) -> Piece:
 	piece.player = player
 	return piece
 
-func updateGameState(boardState):
-	gameState = boardState
+func lastSequence():
+	match sequence:
+		Sequence.IDLE:
+			sequence = Sequence.MOVING
+		Sequence.MOVING:
+			sequence = Sequence.IDLE
 
-
+func nextPlayer() -> void:
+	currentPlayer = Player.DARK if currentPlayer == Player.LIGHT else Player.LIGHT
 
