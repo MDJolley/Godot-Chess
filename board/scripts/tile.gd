@@ -56,6 +56,7 @@ func _on_background_gui_input(event):
 
 func _handle_moving_click(originalTile):
 	board.movePiece(self)
+	board.endTurn()
 
 
 func _handle_idle_click():
@@ -66,7 +67,6 @@ func _handle_idle_click():
 		board.highlightTiles(null)
 	#Clicked tile that current player could move
 	else:
-		print(self.piece)
 		var moves = piece.getValidMoves()
 		board.selectedTile = self
 		Global.validMoves = moves
