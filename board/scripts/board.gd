@@ -25,11 +25,11 @@ func drawBoard():
 #Initiate new pieces and place them in their starting locations
 func setupBoard():
 	#Pawns setup
-#	for file in 8:
-#		var pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.DARK)
-#		setPiece(pawn, Vector2(file, 1))
-#		pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.LIGHT)
-#		setPiece(pawn, Vector2(file, 6))
+	for file in 8:
+		var pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.DARK)
+		setPiece(pawn, Vector2(file, 1))
+		pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.LIGHT)
+		setPiece(pawn, Vector2(file, 6))
 	#Rooks setup
 	for file in 2:
 		var rook = Global.initiatePiece(Piece.Type.ROOK, Global.Player.DARK)
@@ -67,12 +67,20 @@ func setPiece(piece, loc):
 
 func movePiece(endTile) -> bool:
 	var piece = selectedTile.piece
+	var isKing = (selectedTile.piece.type == Piece.Type.KING)
 	#If piece at starting location is null, return false.
 	if not piece: return false
 	#We need to decouple the piece from its original parent
 	selectedTile.remove_child(piece)
 	endTile.piece = piece
-	endTurn()
+	endTile.piece.hasMoved = true
+	if(isKing and (abs(selectedTile.location.x - endTile.location.x) > 0)):
+		if(endTile.location.x < 4):
+			selectedTile = boardState[endTile.location + Vector2(-1, 0)]
+			movePiece(boardState[endTile.location + Vector2(1, 0)])
+		elif(endTile.location.x > 4):
+			selectedTile = boardState[endTile.location + Vector2(1, 0)]
+			movePiece(boardState[endTile.location + Vector2(-1, 0)])
 	#For now we just return true if we didn't catch an issue early on.
 	return true
 

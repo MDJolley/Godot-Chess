@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ltishe0hovy7"]
 
 [ext_resource type="Script" path="res://pieces/model/knight.gd" id="1_5q7mk"]
-[ext_resource type="Texture2D" uid="uid://k62qbilwt7sh" path="res://assets/Knight.png" id="2_n8iy2"]
+[ext_resource type="Texture2D" uid="uid://k62qbilwt7sh" path="res://assets/Knight.png" id="2_fw615"]
 
 [node name="Piece" type="Node2D"]
 position = Vector2(32, 32)
@@ -9,4 +9,4 @@ script = ExtResource("1_5q7mk")
 type = 2
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_n8iy2")
+texture = ExtResource("2_fw615")

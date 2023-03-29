@@ -13,8 +13,7 @@ enum Type {PAWN, ROOK, KNIGHT, BISHOP, KING, QUEEN}
 	get: return type
 
 @onready var sprite = $Sprite
-
-
+var hasMoved = false
 
 func applyColor():
 	if player == Global.Player.DARK: 
@@ -24,5 +23,4 @@ func _ready():
 	pass
 
 func getValidMoves() -> Array:
-	assert(false, "Child must implement")
 	return Array()
