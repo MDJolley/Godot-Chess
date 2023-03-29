@@ -39,7 +39,7 @@ var piece : Piece:
 
 func _ready():
 	updateColor()
-	highlightSprite.set_modulate(Color.BLUE)
+	highlightSprite.set_modulate(Color.CORAL)
 
 func updateColor() -> void:
 	var sum : int = location.x + location.y
@@ -66,7 +66,7 @@ func _handle_idle_click():
 		board.highlightTiles(null)
 	#Clicked tile that current player could move
 	else:
-		print(self.piece)
+#		print(self.piece)
 		var moves = piece.getValidMoves()
 		board.selectedTile = self
 		Global.validMoves = moves

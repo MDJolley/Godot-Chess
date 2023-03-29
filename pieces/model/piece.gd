@@ -21,7 +21,6 @@ func applyColor():
 		$Sprite.set_modulate(Color.SLATE_GRAY)
 
 func _ready():
-#	tile.connect("tileSelected", )
 	pass
 
 func getValidMoves() -> Array:

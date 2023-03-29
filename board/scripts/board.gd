@@ -25,11 +25,11 @@ func drawBoard():
 #Initiate new pieces and place them in their starting locations
 func setupBoard():
 	#Pawns setup
-	for file in 8:
-		var pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.DARK)
-		setPiece(pawn, Vector2(file, 1))
-		pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.LIGHT)
-		setPiece(pawn, Vector2(file, 6))
+#	for file in 8:
+#		var pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.DARK)
+#		setPiece(pawn, Vector2(file, 1))
+#		pawn = Global.initiatePiece(Piece.Type.PAWN, Global.Player.LIGHT)
+#		setPiece(pawn, Vector2(file, 6))
 	#Rooks setup
 	for file in 2:
 		var rook = Global.initiatePiece(Piece.Type.ROOK, Global.Player.DARK)
