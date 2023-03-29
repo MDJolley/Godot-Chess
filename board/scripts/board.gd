@@ -67,18 +67,18 @@ func setPiece(piece, loc):
 
 func movePiece(endTile) -> bool:
 	var piece = selectedTile.piece
-	var isKing = (selectedTile.piece.type == Piece.Type.KING)
+	var isCastling = (selectedTile.piece.type == Piece.Type.KING and (abs(selectedTile.location.x - endTile.location.x) > 0))
 	#If piece at starting location is null, return false.
 	if not piece: return false
 	#We need to decouple the piece from its original parent
 	selectedTile.remove_child(piece)
 	endTile.piece = piece
 	endTile.piece.hasMoved = true
-	if(isKing and (abs(selectedTile.location.x - endTile.location.x) > 0)):
-		if(endTile.location.x < 4):
+	if(isCastling):
+		if(endTile.location.x < 4 and boardState[endTile.location + Vector2(-1, 0)].piece.type == Piece.Type.ROOK):
 			selectedTile = boardState[endTile.location + Vector2(-1, 0)]
 			movePiece(boardState[endTile.location + Vector2(1, 0)])
-		elif(endTile.location.x > 4):
+		elif(endTile.location.x > 4 and boardState[endTile.location + Vector2(1, 0)].piece.type == Piece.Type.ROOK):
 			selectedTile = boardState[endTile.location + Vector2(1, 0)]
 			movePiece(boardState[endTile.location + Vector2(-1, 0)])
 	#For now we just return true if we didn't catch an issue early on.

@@ -1,9 +1,6 @@
 extends Piece
 class_name Pawn
 
-#Remove this once Piece class has this bool
-var hasMoved : bool = false
-
 var legalMoves : Array = [Vector2(0, 1)]
 var attackMoves : Array = []
 
