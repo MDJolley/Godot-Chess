@@ -68,12 +68,15 @@ func setPiece(piece, loc):
 func movePiece(endTile) -> bool:
 	var piece = selectedTile.piece
 	var isCastling = (selectedTile.piece.type == Piece.Type.KING and (abs(selectedTile.location.x - endTile.location.x) > 0))
+	var upgradingPawn = (selectedTile.piece.type == Piece.Type.PAWN and (endTile.location.y == 0 or endTile.location.y == 7))
 	#If piece at starting location is null, return false.
 	if not piece: return false
 	#We need to decouple the piece from its original parent
 	selectedTile.remove_child(piece)
 	endTile.piece = piece
 	endTile.piece.hasMoved = true
+	if(upgradingPawn):
+		upgradePiece(endTile, Piece.Type.QUEEN, )
 	if(isCastling):
 		if(endTile.location.x < 4 and boardState[endTile.location + Vector2(-1, 0)].piece.type == Piece.Type.ROOK):
 			selectedTile = boardState[endTile.location + Vector2(-1, 0)]
@@ -90,6 +93,11 @@ func endTurn():
 	Global.validMoves = Array()
 	Global.nextPlayer()
 
+func upgradePiece(tile, type):
+	var player = tile.piece.player
+	tile.remove_child(tile.piece)
+	setPiece(Global.initiatePiece(type, player), tile.location)
+	
 #This should only be used for clearing the board.
 func removePiece(loc):
 	var tile = boardState[loc]

@@ -6,6 +6,7 @@
 [node name="Piece" type="Node2D"]
 position = Vector2(32, 32)
 script = ExtResource("1_mgxpl")
+type = 5
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_6pwss")

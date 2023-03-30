@@ -1,26 +1,25 @@
 extends Piece
 class_name Pawn
 
-var legalMoves : Array = [Vector2(0, 1), Vector2(1, 1), Vector2(-1, 1)]
-
 func getValidMoves() -> Array:
+	var legalMoves : Array = [Vector2(0, -1), Vector2(1, -1), Vector2(-1, -1)]
 	var tile = get_parent()
 	var validMoves : Array
-	var blackOffset = Vector2(0, 0)
+	var blackOffset = Vector2(1, -1)
 	if not hasMoved:
-		legalMoves.append(Vector2(0, 2))
-	if player == Global.Player.DARK:
-		blackOffset = Vector2(0, -2)
+		legalMoves.append(Vector2(0, -2))
+	if player == Global.Player.LIGHT:
+		blackOffset = Vector2(1, 1)
 	for move in legalMoves:
-		var endTile = move + tile.location + blackOffset
+		var endTile = (move * blackOffset) + tile.location
 		if tile.board.boardState.has(endTile):
 			if tile.board.boardState[endTile].piece:
-				if tile.board.boardState[endTile].piece.player != self.player:
+				if tile.board.boardState[endTile].location.x != tile.location.x and tile.board.boardState[endTile].piece.player != self.player:
 					validMoves.append(endTile)
-			elif(tile.board.boardState[endTile].location.y == tile.location.y):
+			elif(tile.board.boardState[endTile].location.x == tile.location.x):
 				validMoves.append(endTile)
 	return validMoves
-
+	
 func _ready():
 	super._ready()
 	#Changing moves based on color
