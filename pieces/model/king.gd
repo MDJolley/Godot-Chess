@@ -18,10 +18,10 @@ func getValidMoves() -> Array:
 	var location = tile.location
 	if(not hasMoved and not tile.board.boardState[Vector2(-4, 0) + location].piece.hasMoved):
 		if(tile.board.boardState[Vector2(-1, 0) + location].piece == null and tile.board.boardState[Vector2(-2, 0) + location].piece == null and tile.board.boardState[Vector2(-3, 0) + location].piece == null):
-			legalMoves += castleLeft
+			legalMoves.append(castleLeft)
 	if(not hasMoved and not tile.board.boardState[Vector2(3, 0) + location].piece.hasMoved):
 		if(tile.board.boardState[Vector2(1, 0) + location].piece == null and tile.board.boardState[Vector2(2, 0) + location].piece == null):
-			legalMoves += castleRight
+			legalMoves.append(castleRight)
 
 	for move in legalMoves:
 		var endTile : Vector2 = move + tile.location
