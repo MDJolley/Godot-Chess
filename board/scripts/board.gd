@@ -2,6 +2,7 @@ extends GridContainer
 class_name Board
 
 const tilePath = preload("res://board/scenes/tile.tscn")
+const victoryScreen = preload("res://UI/victoryScreen.tscn")
 var boardState = {}
 var selectedTile : Tile
 
@@ -72,9 +73,13 @@ func movePiece(endTile) -> bool:
 	#If piece at starting location is null, return false.
 	if not piece: return false
 	#We need to decouple the piece from its original parent
+	if(endTile.piece != null):
+		if(endTile.piece.type == Piece.Type.KING):
+			endGame()
 	selectedTile.remove_child(piece)
 	endTile.piece = piece
 	endTile.piece.hasMoved = true
+	
 	if(upgradingPawn):
 		upgradePiece(endTile, Piece.Type.QUEEN, )
 	if(isCastling):
@@ -86,6 +91,11 @@ func movePiece(endTile) -> bool:
 			movePiece(boardState[endTile.location + Vector2(-1, 0)])
 	#For now we just return true if we didn't catch an issue early on.
 	return true
+
+func endGame():
+	#Need to change the text to the player who won
+	get_tree().change_scene_to_packed(victoryScreen)
+
 
 func endTurn():
 	selectedTile = null
